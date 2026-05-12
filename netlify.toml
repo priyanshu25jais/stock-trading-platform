@@ -1,0 +1,11 @@
+# Single Netlify site: marketing app (CRA in /frontend)
+# Backend API lives on Render (see render.yaml + README.md).
+[build]
+  base = "frontend"
+  command = "npm ci && npm run build"
+  publish = "build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

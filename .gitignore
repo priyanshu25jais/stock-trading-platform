@@ -1,0 +1,11 @@
+node_modules/
+.env
+backend/.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+
+# CRA build output (do not commit)
+frontend/build/
+dashboard/build/

@@ -1,0 +1,16 @@
+# Render Blueprint: deploy the Node API from /backend
+# https://render.com/docs/blueprint-spec
+version: "1"
+services:
+  - type: web
+    name: zerodha-backend
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: MONGO_URL
+        sync: false

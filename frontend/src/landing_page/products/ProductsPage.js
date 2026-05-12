@@ -5,10 +5,7 @@ import LeftSection from "./LeftSection";
 import RightSection from "./RightSection";
 import Universe from "./Universe";
 
-import Navbar from "../Navbar";
-import Footer from "../Footer";
-
-function PricingPage() {
+function ProductsPage() {
   return (
     <>
       <Hero />
@@ -60,4 +57,4 @@ function PricingPage() {
   );
 }
 
-export default PricingPage;
+export default ProductsPage;
