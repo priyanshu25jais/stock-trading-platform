@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function Signup() {
-  return (
-    <div className="container p-5">
-      <h1>Signup</h1>
-    </div>
-  );
+  useEffect(() => {
+    window.location.href = "https://stock-tradingdashboard.netlify.app";
+  }, []);
+
+  return <h2>Redirecting to Dashboard...</h2>;
 }
 
 export default Signup;
