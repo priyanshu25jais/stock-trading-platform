@@ -1,128 +1,195 @@
-# Zerodha clone (monorepo)
+# Zerodha Clone - Full Stack Stock Trading Platform
 
-| App        | Stack        | Local port | Role                          |
-| ---------- | ------------ | ---------- | ----------------------------- |
-| `frontend` | React (CRA) | 3000       | Marketing / landing pages     |
-| `dashboard`| React (CRA) | 3001       | Trading UI; calls backend API |
-| `backend`  | Express + MongoDB | 3002 | REST API for holdings & orders |
+A full-stack stock trading platform inspired by Zerodha, built using React, Node.js, Express, and MongoDB. The project consists of a marketing website, a trading dashboard, and a backend API that serves holdings, positions, and order data.
 
----
+## Live Demo
 
-## Local development
+### Landing Website
 
-1. **MongoDB** — Create a cluster (e.g. [MongoDB Atlas](https://www.mongodb.com/atlas)) and note the connection string.
+https://stock-tradingplatform.netlify.app
 
-2. **Backend**
+### Trading Dashboard
 
-   ```bash
-   cd backend
-   cp env.example .env
-   # Edit .env: set MONGO_URL=...
-   npm install
-   npm run dev
-   ```
+https://stock-tradingdashboard.netlify.app
 
-3. **Frontend** (new terminal)
+### Backend API
 
-   ```bash
-   cd frontend
-   npm install
-   npm start
-   ```
-
-4. **Dashboard** (new terminal)
-
-   ```bash
-   cd dashboard
-   cp .env.example .env
-   # Default REACT_APP_API_URL=http://localhost:3002 is used if .env is omitted
-   npm install
-   npm start
-   ```
-
-The dashboard reads **`REACT_APP_API_URL`** from `dashboard/src/api.js` (defaults to `http://localhost:3002`).
+https://stock-trading-platform-wezz.onrender.com
 
 ---
 
-## Deploy overview (one Render + one Netlify)
+## Project Overview
 
-| Service | Platform | What gets deployed |
-| ------- | -------- | ------------------ |
-| **API** | **Render** | `backend/` — see [`render.yaml`](render.yaml) |
-| **Website** | **Netlify** | `frontend/` only — root [`netlify.toml`](netlify.toml) sets `base = "frontend"` |
+This project recreates the core experience of a modern stock trading platform. It includes:
 
-Connect **one** Netlify site to this repo; you do **not** need to set a base directory in the UI (the root `netlify.toml` handles it).
-
-The **dashboard** (`dashboard/`) is for local use unless you add a **second** Netlify site with base directory `dashboard` and `REACT_APP_API_URL` set to your Render API URL (see [`dashboard/netlify.toml`](dashboard/netlify.toml)).
-
----
-
-## 1. Backend on Render
-
-### Option A — Blueprint (this repo)
-
-1. Push this repo to GitHub.
-2. In Render: **New → Blueprint** → connect the repo → Render reads [`render.yaml`](render.yaml).
-3. When prompted, add secret **`MONGO_URL`** (Atlas connection string).
-4. After deploy, copy the service URL, e.g. `https://zerodha-backend.onrender.com`.
-
-### Option B — Manual Web Service
-
-1. **New → Web Service** → connect repo.
-2. **Root Directory:** `backend`
-3. **Build Command:** `npm install`
-4. **Start Command:** `npm start` (runs `node index.js`)
-5. **Environment:** `MONGO_URL` = your Atlas URI (add `0.0.0.0/0` or Render outbound IPs in Atlas Network Access).
-6. **Instance type:** Free is fine; free dynos **spin down** after idle — first request may be slow.
-
-Health check: `GET /` returns JSON `{ "ok": true, ... }`.
+* Landing pages similar to Zerodha's public website
+* Interactive trading dashboard
+* Holdings and positions management
+* Orders section
+* Funds overview
+* REST API integration
+* MongoDB database connectivity
+* Cloud deployment using Netlify and Render
 
 ---
 
-## 2. Frontend on Netlify (single site, repo root)
+## Tech Stack
 
-1. Push this repo to GitHub (see **Git** at the end of this file).
-2. Netlify: **Add new site → Import from Git** → select the repo.
-3. Leave **base directory** empty; Netlify uses the root [`netlify.toml`](netlify.toml) (`base = "frontend"`, publish `build`).
-4. Deploy. You get the marketing site on `*.netlify.app`.
+### Frontend
 
-No environment variables are required for the landing app.
+* React.js
+* React Router
+* Bootstrap
+* Axios
 
----
+### Backend
 
-## 3. Optional: dashboard on a second Netlify site
+* Node.js
+* Express.js
 
-1. **Add new site → Import from Git** → same repo.
-2. **Base directory:** `dashboard`
-3. **Build:** `npm run build` · **Publish:** `build`
-4. Set **`REACT_APP_API_URL`** to your Render API URL, then redeploy.
+### Database
 
----
+* MongoDB Atlas
 
-## CORS and security
+### Deployment
 
-The API uses `cors()` with default **allow all origins**, so Netlify frontends can call Render. For production hardening, restrict `origin` to your two Netlify URLs and keep HTTPS only.
-
----
-
-## Troubleshooting
-
-- **Dashboard shows empty holdings / network error** — Check `REACT_APP_API_URL` matches the live Render URL exactly; trigger a **Clear cache and deploy** on Netlify after changing env.
-- **Mongo errors on Render** — Confirm Atlas **Network Access** allows connections from the internet (or Render’s egress).
-- **Manifest / icon errors** — Ensure `public/manifest.json` and referenced icons exist under each CRA app’s `public/` folder.
+* Netlify (Frontend & Dashboard)
+* Render (Backend API)
 
 ---
 
-## Git: commit and push
+## Project Structure
 
-Do **not** commit `backend/.env` (secrets). It is listed in `.gitignore`; if Git still tracks an old copy, run `git rm --cached backend/.env` once.
-
-```bash
-git add .
-git reset HEAD backend/.env   # skip secrets if they were staged
-git status                   # confirm .env is not staged
-git commit -m "Add Render + Netlify deploy config and app updates"
-git push origin main
+```text
+stock-trading-platform/
+│
+├── frontend/      # Landing website
+├── dashboard/     # Trading dashboard
+├── backend/       # Express API server
+│
+└── README.md
 ```
 
-Use your branch name if it is not `main`.
+---
+
+## Features
+
+### Landing Website
+
+* Home page
+* About page
+* Product page
+* Pricing page
+* Support page
+* Signup redirection
+
+### Trading Dashboard
+
+* Dashboard overview
+* Holdings data
+* Orders section
+* Positions section
+* Funds management
+* Live API integration
+
+### Backend API
+
+* Holdings endpoint
+* Positions endpoint
+* Orders endpoint
+* MongoDB integration
+* CORS enabled
+
+---
+
+## Local Setup
+
+### Clone Repository
+
+```bash
+git clone https://github.com/priyanshu25jais/stock-trading-platform.git
+cd stock-trading-platform
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+### Dashboard
+
+```bash
+cd dashboard
+npm install
+npm start
+```
+
+---
+
+## Environment Variables
+
+Dashboard:
+
+```env
+REACT_APP_API_URL=http://localhost:3002
+```
+
+Production:
+
+```env
+REACT_APP_API_URL=https://stock-trading-platform-wezz.onrender.com
+```
+
+Backend:
+
+```env
+MONGO_URL=your_mongodb_connection_string
+```
+
+---
+
+## Deployment
+
+### Frontend
+
+Hosted on Netlify
+
+### Dashboard
+
+Hosted on Netlify
+
+### Backend
+
+Hosted on Render
+
+---
+
+## Future Improvements
+
+* User authentication
+* JWT-based login system
+* Real-time stock prices
+* Portfolio analytics
+* Trade execution simulation
+* Responsive mobile dashboard
+
+---
+
+## Author
+
+**Priyanshu Jaiswal**
+
+GitHub:
+https://github.com/priyanshu25jais
+
