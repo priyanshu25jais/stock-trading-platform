@@ -1,16 +1,20 @@
-# Render Blueprint: deploy the Node API from /backend
+# Render Blueprint for the Vittora API (Node + Express) in /backend.
 # https://render.com/docs/blueprint-spec
+# The live service was created in the Render dashboard; this file documents
+# the same settings so the API can be recreated from the repo if needed.
 version: "1"
 services:
   - type: web
-    name: zerodha-backend
+    name: vittora-api
     runtime: node
     region: oregon
     plan: free
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: MONGO_URL
+        sync: false
+      - key: CORS_ORIGIN
         sync: false

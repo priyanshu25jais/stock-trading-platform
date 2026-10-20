@@ -1,13 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
-    <div className="container p-5 mb-5">
-      <div className="row text-center">
-        <h1 className="mt-5">404 Not Found</h1>
-        <p>Sorry, the page you are looking for does not exist.</p>
+    <section className="site-container page-hero not-found">
+      <h1 className="page-title">This page doesn't exist</h1>
+      <p className="lede">The link may be old, or the address may have a typo.</p>
+      <div className="hero-actions">
+        <Link to="/" className="button button-primary">
+          Go to the home page
+        </Link>
+        <Link to="/support" className="text-link">
+          Get help
+        </Link>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -1,5 +1,6 @@
-# Single Netlify site: marketing app (CRA in /frontend)
-# Backend API lives on Render (see render.yaml + README.md).
+# Netlify settings for the Vittora website (React app in /frontend).
+# The dashboard has its own Netlify site configured by dashboard/netlify.toml.
+# The API lives on Render (see render.yaml and README.md).
 [build]
   base = "frontend"
   command = "npm ci && npm run build"

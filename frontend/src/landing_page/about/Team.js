@@ -1,42 +1,56 @@
 import React from "react";
 
+import { AUTHOR_URL, REPO_URL } from "../links";
+
+const PARTS = [
+  { name: "Website", detail: "React, React Router", host: "Netlify" },
+  { name: "Vittora Desk", detail: "React, Chart.js", host: "Netlify" },
+  { name: "Vittora API", detail: "Node.js, Express", host: "Render" },
+  { name: "Database", detail: "MongoDB, Mongoose", host: "MongoDB Atlas" },
+];
+
 function Team() {
   return (
-    <div className="container">
-      <div className="row p-3 mt-5 border-top">
-        <h1 className="text-center ">People</h1>
-      </div>
+    <>
+      <section className="section section-tinted">
+        <div className="site-container">
+          <h2 className="section-title">How it's built</h2>
+          <p className="section-lede">
+            Four parts, each deployed on its own. The website and the desk are separate React apps; the desk
+            talks to the API, and the API keeps the account in MongoDB.
+          </p>
+          <ol className="architecture" aria-label="How a request travels through Vittora">
+            {PARTS.map((part) => (
+              <li key={part.name}>
+                <strong>{part.name}</strong>
+                <span>{part.detail}</span>
+                <span className="architecture-host">Hosted on {part.host}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-      <div
-        className="row p-3 text-muted"
-        style={{ lineHeight: "1.8", fontSize: "1.2em" }}
-      >
-        <div className="col-6 p-3 text-center">
-          <img
-            src="media/images/nithinKamath.jpg"
-            style={{ borderRadius: "100%", width: "50%" }}
-          />
-          <h4 className="mt-5">Nithin Kamath</h4>
-          <h6>Founder, CEO</h6>
+      <section className="section">
+        <div className="site-container builder">
+          <span className="builder-avatar" aria-hidden="true">
+            PJ
+          </span>
+          <div>
+            <h2 className="section-title">Built by Priyanshu Jaiswal</h2>
+            <p>
+              Vittora is a full-stack project by Priyanshu Jaiswal, a B.Tech Computer Science student. It
+              began as a study of how a discount broker's website and trading screen fit together, and grew
+              into its own product with a working order engine.
+            </p>
+            <p className="builder-links">
+              <a href={AUTHOR_URL}>GitHub profile</a>
+              <a href={REPO_URL}>Project source code</a>
+            </p>
+          </div>
         </div>
-        <div className="col-6 p-3">
-          <p>
-            Nithin bootstrapped and founded Zerodha in 2010 to overcome the
-            hurdles he faced during his decade long stint as a trader. Today,
-            Zerodha has changed the landscape of the Indian broking industry.
-          </p>
-          <p>
-            He is a member of the SEBI Secondary Market Advisory Committee
-            (SMAC) and the Market Data Advisory Committee (MDAC).
-          </p>
-          <p>Playing basketball is his zen.</p>
-          <p>
-            Connect on <a href="">Homepage</a> / <a href="">TradingQnA</a> /{" "}
-            <a href="">Twitter</a>
-          </p>
-        </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
 

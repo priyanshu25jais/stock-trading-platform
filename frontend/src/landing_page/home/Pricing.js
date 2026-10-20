@@ -1,39 +1,42 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+export const CHARGES = [
+  { item: "Delivery (CNC) orders", price: "₹0", note: "Buy and hold with no brokerage." },
+  { item: "Intraday (MIS) orders", price: "₹20 or 0.03%", note: "Per executed order, whichever is lower." },
+  { item: "Account opening and upkeep", price: "₹0", note: "No sign-up fee and no yearly charge." },
+];
 
 function Pricing() {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-4">
-          <h1 className="mb-3 fs-2">Unbeatable pricing</h1>
+    <section className="section">
+      <div className="site-container split">
+        <div>
+          <h2 className="section-title">Flat, simple brokerage</h2>
           <p>
-            We pioneered the concept of discount broking and price transparency
-            in India. Flat fees and no hidden charges.
+            Vittora charges the same simple rates many Indian discount brokers use, so the numbers you
+            practise with look like the ones you'll see later.
           </p>
-          <a href="" style={{ textDecoration: "none" }}>
-            See Pricing{" "}
-            <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-          </a>
+          <Link to="/pricing" className="text-link">
+            See pricing and a brokerage calculator
+          </Link>
         </div>
-        <div className="col-2"></div>
-        <div className="col-6  mb-5">
-          <div className="row text-center">
-            <div className="col p-3 border">
-              <h1 className="mb-3">₹0</h1>
-              <p>
-                Free equity delivery and
-                <br />
-                direct mutual funds
-              </p>
-            </div>
-            <div className="col p-3 border">
-              <h1 className="mb-3">₹20</h1>
-              <p>Intraday and F&O</p>
-            </div>
-          </div>
-        </div>
+        <table className="ledger-table">
+          <caption className="sr-only">Vittora charges</caption>
+          <tbody>
+            {CHARGES.map((c) => (
+              <tr key={c.item}>
+                <th scope="row">
+                  {c.item}
+                  <span>{c.note}</span>
+                </th>
+                <td>{c.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </section>
   );
 }
 

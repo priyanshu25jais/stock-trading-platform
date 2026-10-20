@@ -2,57 +2,37 @@ import React from "react";
 
 function Hero() {
   return (
-    <div className="container">
-      <div className="row p-5 mt-5 mb-5">
-        <h1 className="fs-2 text-center">
-          We pioneered the discount broking model in India
-          <br />
-          Now, we are breaking ground with our technology.
-        </h1>
-      </div>
+    <section className="site-container page-hero">
+      <h1 className="page-title">A practice desk, not a broker</h1>
+      <p className="lede">
+        Most people place their first real trade without ever having seen an order window. Vittora gives you
+        one to learn on, with prices that move and rules that push back, and no money on the line.
+      </p>
 
-      <div
-        className="row p-5 mt-5 border-top text-muted"
-        style={{ lineHeight: "1.8", fontSize: "1.2em" }}
-      >
-        <div className="col-6 p-5">
+      <div className="prose-columns">
+        <div>
+          <h2>Where the name comes from</h2>
           <p>
-            We kick-started operations on the 15th of August, 2010 with the goal
-            of breaking all barriers that traders and investors face in India in
-            terms of cost, support, and technology. We named the company
-            Zerodha, a combination of Zero and "Rodha", the Sanskrit word for
-            barrier.
-          </p>
-          <p>
-            Today, our disruptive pricing models and in-house technology have
-            made us the biggest stock broker in India.
-          </p>
-          <p>
-            Over 1+ Crore clients place millions of orders every day through our
-            powerful ecosystem of investment platforms, contributing over 15% of
-            all Indian retail trading volumes.
+            <em lang="sa">Vitta</em> (वित्त) is Sanskrit for wealth and finance. Vittora is our word for a
+            place to get comfortable with both before it costs anything.
           </p>
         </div>
-        <div className="col-6 p-5">
+        <div>
+          <h2>What you can do here</h2>
           <p>
-            In addition, we run a number of popular open online educational and
-            community initiatives to empower retail traders and investors.
+            Every account starts with ₹1,00,000 of demo money. You can buy and sell seventeen Indian stocks as
+            delivery or intraday trades, add or withdraw demo funds, and follow your P&amp;L as prices change.
           </p>
+        </div>
+        <div>
+          <h2>What Vittora is not</h2>
           <p>
-            <a href="" style={{ textDecoration: "none" }}>
-              Rainmatter
-            </a>
-            , our fintech fund and incubator, has invested in several fintech
-            startups with the goal of growing the Indian capital markets.
-          </p>
-          <p>
-            And yet, we are always up to something new every day. Catch up on
-            the latest updates on our blog or see what the media is saying about
-            us.
+            Vittora isn't registered with SEBI or any exchange. It can't hold real money or shares, and its
+            prices are sample data with simulated movement. Use it to learn, not to decide real investments.
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

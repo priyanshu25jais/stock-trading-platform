@@ -1,10 +1,10 @@
 const { Schema } = require("mongoose");
 
 const PositionsSchema = new Schema({
-  product: String,
-  name: String,
-  qty: Number,
-  avg: Number,
+  product: { type: String, default: "MIS" },
+  name: { type: String, required: true, uppercase: true, trim: true },
+  qty: { type: Number, required: true, min: 0 },
+  avg: { type: Number, required: true, min: 0 },
   price: Number,
   net: String,
   day: String,

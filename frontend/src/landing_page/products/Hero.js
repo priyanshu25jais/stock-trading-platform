@@ -1,22 +1,20 @@
 import React from "react";
 
+import { DASHBOARD_URL } from "../links";
+
 function Hero() {
   return (
-    <div className="container border-bottom mb-5">
-      <div className="text-center mt-5 p-3">
-        <h1>Technology</h1>
-        <h3 className="text-muted mt-3 fs-4">
-          Sleek, modern and intuitive trading platforms
-        </h3>
-        <p className="mt-3 mb-5">
-          Check out our{" "}
-          <a href="" style={{ textDecoration: "none" }}>
-            investment offerings{" "}
-            <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-          </a>
-        </p>
+    <section className="site-container page-hero">
+      <h1 className="page-title">One desk for watching, trading and tracking</h1>
+      <p className="lede">
+        Vittora Desk is the trading screen behind every account. Here's what each part of it does.
+      </p>
+      <div className="hero-actions">
+        <a href={DASHBOARD_URL} className="button button-primary">
+          Open Vittora Desk
+        </a>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -1,0 +1,16 @@
+{
+  "name": "vittora",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vittora: practice stock trading platform (website, dashboard and API)",
+  "scripts": {
+    "setup": "npm install && npm --prefix backend install && npm --prefix dashboard install && npm --prefix frontend install",
+    "dev": "concurrently --kill-others-on-fail --names api,desk,site --prefix-colors blue,magenta,yellow \"npm --prefix backend start\" \"npm --prefix dashboard run start:local\" \"npm --prefix frontend run start:local\"",
+    "test": "npm --prefix backend test && npm --prefix frontend test -- --watchAll=false && npm --prefix dashboard test -- --watchAll=false"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "author": "Priyanshu Jaiswal",
+  "license": "ISC"
+}

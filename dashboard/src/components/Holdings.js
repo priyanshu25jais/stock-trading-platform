@@ -1,111 +1,108 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { API_BASE } from "../api";
-import { VerticalGraph } from "./VerticalGraph";
+import React from "react";
 
-// import { holdings } from "../data/data";
+import VerticalGraph from "./VerticalGraph";
+import { totals, useTrading } from "./GeneralContext";
+import { inr, rupees, signedPct, tone } from "../format";
+
+export function RowActions({ symbol, product = "CNC" }) {
+  const { openTicket } = useTrading();
+  return (
+    <span className="row-actions">
+      <button type="button" className="chip chip-buy" onClick={() => openTicket(symbol, "BUY", product)}>
+        Buy
+      </button>
+      <button type="button" className="chip chip-sell" onClick={() => openTicket(symbol, "SELL", product)}>
+        Sell
+      </button>
+    </span>
+  );
+}
 
 const Holdings = () => {
-  const [allHoldings, setAllHoldings] = useState([]);
-
-  useEffect(() => {
-    axios.get(`${API_BASE}/allHoldings`).then((res) => {
-      // console.log(res.data);
-      setAllHoldings(res.data);
-    });
-  }, []);
-
-  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  const labels = allHoldings.map((subArray) => subArray["name"]);
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Stock Price",
-        data: allHoldings.map((stock) => stock.price),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  };
-
-  // export const data = {
-  //   labels,
-  //   datasets: [
-  // {
-  //   label: 'Dataset 1',
-  //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-  //   backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  // },
-  //     {
-  //       label: 'Dataset 2',
-  //       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-  //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-  //     },
-  //   ],
-  // };
+  const { holdings } = useTrading();
+  const t = totals(holdings);
 
   return (
-    <>
-      <h3 className="title">Holdings ({allHoldings.length})</h3>
+    <div className="page">
+      <header className="page-head page-head-row">
+        <h1 className="page-title">Holdings ({holdings.length})</h1>
+        <p className="page-sub">Delivery (CNC) shares you own. Prices update live.</p>
+      </header>
 
-      <div className="order-table">
-        <table>
-          <tr>
-            <th>Instrument</th>
-            <th>Qty.</th>
-            <th>Avg. cost</th>
-            <th>LTP</th>
-            <th>Cur. val</th>
-            <th>P&L</th>
-            <th>Net chg.</th>
-            <th>Day chg.</th>
-          </tr>
+      {holdings.length === 0 ? (
+        <p className="empty-note">
+          You don't own any shares yet. Choose a stock in the watchlist and buy it as Delivery (CNC).
+        </p>
+      ) : (
+        <>
+          <div className="totals">
+            <div>
+              <p className="totals-value num">{rupees(t.invested)}</p>
+              <p className="totals-label">Total investment</p>
+            </div>
+            <div>
+              <p className="totals-value num">{rupees(t.current)}</p>
+              <p className="totals-label">Current value</p>
+            </div>
+            <div>
+              <p className={`totals-value num ${tone(t.pnl)}`}>
+                {t.pnl >= 0 ? "+" : "−"}
+                {rupees(Math.abs(t.pnl))} <span className="totals-pct">{signedPct(t.pnlPct)}</span>
+              </p>
+              <p className="totals-label">P&amp;L</p>
+            </div>
+          </div>
 
-          {allHoldings.map((stock, index) => {
-            const curValue = stock.price * stock.qty;
-            const isProfit = curValue - stock.avg * stock.qty >= 0.0;
-            const profClass = isProfit ? "profit" : "loss";
-            const dayClass = stock.isLoss ? "loss" : "profit";
+          <div className="table-wrap">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Instrument</th>
+                  <th scope="col">Qty.</th>
+                  <th scope="col">Avg. cost</th>
+                  <th scope="col">LTP</th>
+                  <th scope="col">Cur. value</th>
+                  <th scope="col">P&amp;L</th>
+                  <th scope="col">Net chg.</th>
+                  <th scope="col">Day chg.</th>
+                  <th scope="col">
+                    <span className="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {holdings.map((h) => (
+                  <tr key={h._id || h.name}>
+                    <th scope="row">{h.name}</th>
+                    <td className="num">{h.qty}</td>
+                    <td className="num">{inr(h.avg)}</td>
+                    <td className="num">{inr(h.price)}</td>
+                    <td className="num">{inr(h.curValue)}</td>
+                    <td className={`num ${tone(h.pnl)}`}>
+                      {h.pnl >= 0 ? "+" : "−"}
+                      {inr(Math.abs(h.pnl))}
+                    </td>
+                    <td className={`num ${tone(h.netPct)}`}>{signedPct(h.netPct)}</td>
+                    <td className={`num ${tone(h.dayPct)}`}>{signedPct(h.dayPct)}</td>
+                    <td>
+                      <RowActions symbol={h.name} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            return (
-              <tr key={index}>
-                <td>{stock.name}</td>
-                <td>{stock.qty}</td>
-                <td>{stock.avg.toFixed(2)}</td>
-                <td>{stock.price.toFixed(2)}</td>
-                <td>{curValue.toFixed(2)}</td>
-                <td className={profClass}>
-                  {(curValue - stock.avg * stock.qty).toFixed(2)}
-                </td>
-                <td className={profClass}>{stock.net}</td>
-                <td className={dayClass}>{stock.day}</td>
-              </tr>
-            );
-          })}
-        </table>
-      </div>
-
-      <div className="row">
-        <div className="col">
-          <h5>
-            29,875.<span>55</span>{" "}
-          </h5>
-          <p>Total investment</p>
-        </div>
-        <div className="col">
-          <h5>
-            31,428.<span>95</span>{" "}
-          </h5>
-          <p>Current value</p>
-        </div>
-        <div className="col">
-          <h5>1,553.40 (+5.20%)</h5>
-          <p>P&L</p>
-        </div>
-      </div>
-      <VerticalGraph data={data} />
-    </>
+          <section aria-labelledby="pnl-chart-h" className="chart-section">
+            <h2 id="pnl-chart-h" className="block-title">
+              P&amp;L by holding
+            </h2>
+            <p className="chart-note">Bars above the line are gains, bars below are losses.</p>
+            <VerticalGraph rows={holdings} />
+          </section>
+        </>
+      )}
+    </div>
   );
 };
 

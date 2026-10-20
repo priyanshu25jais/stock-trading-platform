@@ -1,62 +1,53 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+
+import Logo from "./Logo";
+
+const LINKS = [
+  { to: "/product", label: "Products" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/about", label: "About" },
+  { to: "/support", label: "Support" },
+];
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => setOpen(false), [pathname]);
+
   return (
-    <nav
-      className="navbar navbar-expand-lg border-bottom"
-      style={{ backgroundColor: "#FFF" }}
-    >
-      <div className="container p-2">
-        <Link className="navbar-brand" to="/">
-          <img
-            src={`${process.env.PUBLIC_URL}/media/images/logo.svg`}
-            style={{ width: "25%" }}
-            alt="Logo"
-          />
+    <header className="site-header">
+      <div className="site-container header-inner">
+        <Link to="/" className="brand-link" aria-label="Vittora home">
+          <Logo />
         </Link>
         <button
-          className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          className="menu-toggle"
+          aria-expanded={open}
+          aria-controls="site-nav"
+          onClick={() => setOpen(!open)}
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="menu-toggle-bars" aria-hidden="true" />
+          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/signup">
-                Signup
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/about">
-                About
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/product">
-                Product
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/pricing">
-                Pricing
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/support">
-                Support
-              </NavLink>
-            </li>
+        <nav id="site-nav" className={`site-nav${open ? " is-open" : ""}`} aria-label="Main">
+          <ul>
+            {LINKS.map((link) => (
+              <li key={link.to}>
+                <NavLink to={link.to} className="site-nav-link">
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
-        </div>
+          <Link to="/signup" className="button button-primary button-sm">
+            Sign up
+          </Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 

@@ -1,58 +1,46 @@
 import React from "react";
 
 import Hero from "./Hero";
-import LeftSection from "./LeftSection";
-import RightSection from "./RightSection";
-import Universe from "./Universe";
+import FeatureRow from "./FeatureRow";
+import ApiSection from "./ApiSection";
+import OpenAccount from "../OpenAccount";
+
+const ROWS = [
+  {
+    title: "Watchlist and order window",
+    text: "Search the watchlist by symbol or company name. Hover over a stock and press B or S to open the order window, choose Delivery or Intraday, Market or Limit, and see the order value and brokerage before you confirm.",
+    image: "desk-order.webp",
+    alt: "Vittora order window open to buy shares of Infosys, showing quantity, price, order value and brokerage",
+  },
+  {
+    title: "Holdings and P&L",
+    text: "Every share you own, with average cost, last traded price, current value and profit or loss. A chart shows which holdings are up and which are down.",
+    image: "desk-holdings.webp",
+    alt: "Holdings table listing thirteen stocks with quantity, average cost, last price and profit or loss",
+  },
+  {
+    title: "Orders and positions",
+    text: "A log of every order you place, newest first, with its price, value and brokerage. Intraday trades you haven't closed yet appear under Positions.",
+    image: "desk-orders.webp",
+    alt: "Orders page listing buy and sell orders with time, instrument, quantity, price and status",
+  },
+  {
+    title: "Funds",
+    text: "See the cash you have available to trade, add or withdraw demo money, and follow how your opening balance has moved.",
+    image: "desk-funds.webp",
+    alt: "Funds page showing available cash, a ledger of fund movements and a form to add or withdraw money",
+  },
+];
 
 function ProductsPage() {
   return (
     <>
       <Hero />
-      <LeftSection
-        imageURL="media/images/kite.png"
-        productName="Kite"
-        productDesription="Our ultra-fast flagship trading platform with streaming market data, advanced charts, an elegant UI, and more. Enjoy the Kite experience seamlessly on your Android and iOS devices."
-        tryDemo=""
-        learnMore=""
-        googlePlay=""
-        appStore=""
-      />
-      <RightSection
-        imageURL="media/images/console.png"
-        productName="Console"
-        productDesription="The central dashboard for your Zerodha account. Gain insights into your trades and investments with in-depth reports and visualisations."
-        learnMore=""
-      />
-      <LeftSection
-        imageURL="media/images/coin.png"
-        productName="Coin"
-        productDesription="Buy direct mutual funds online, commission-free, delivered directly to your Demat account. Enjoy the investment experience on your Android and iOS devices."
-        tryDemo=""
-        learnMore=""
-        googlePlay=""
-        appStore=""
-      />
-      <RightSection
-        imageURL="media/images/kiteconnect.png"
-        productName="Kite Connect API"
-        productDesription="Build powerful trading platforms and experiences with our super simple HTTP/JSON APIs. If you are a startup, build your investment app and showcase it to our clientbase."
-        learnMore=""
-      />
-      <LeftSection
-        imageURL="media/images/varsity.png"
-        productName="Varsity mobile"
-        productDesription="An easy to grasp, collection of stock market lessons with in-depth coverage and illustrations. Content is broken down into bite-size cards to help you learn on the go."
-        tryDemo=""
-        learnMore=""
-        googlePlay=""
-        appStore=""
-      />
-      <p className="text-center mt-5 mb-5">
-        Want to know more about our technology stack? Check out the Zerodha.tech
-        blog.
-      </p>
-      <Universe />
+      {ROWS.map((row, i) => (
+        <FeatureRow key={row.title} {...row} reverse={i % 2 === 1} />
+      ))}
+      <ApiSection />
+      <OpenAccount title="Try the desk with demo money" />
     </>
   );
 }
